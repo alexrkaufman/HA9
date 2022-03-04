@@ -1,0 +1,272 @@
+# Yaml file specifying all the registers for the HA9 Programmable Attenuator
+
+# Operation Commands
+
+D:
+  fnname: beamblock
+  description: >
+    *Beam Block*
+
+    Controls the on/off status of the beam block.
+
+    * 0 = Beam Block Off
+    * 1 = Beam Block On
+
+RESET:
+  fnname: reset
+  description: >
+    *Reset*
+
+    Returns the attenuator to the following default settings.
+
+    * WVL = 1310 nm
+    * DISP = 0
+    * CAL = 0 dB
+    * PCAL = 0 dB
+    * ATT = 0 dB
+
+    The values of D, XDR, and SRE are not changed.
+
+WVL:
+  fnname: wvl
+  description: >
+    *Calibration Wavelength*
+
+    Sets the calibration wavelengths of the attenuator from
+    1200 to 1700 nm for the standard HA9 model and from 750
+    to 1700 nm for the wide model (HA9W). The default unit is
+    meters (m).
+
+DISP:
+  fnname: disp
+  description: >
+    Controls the display mode of the attenuator while in Remote mode:
+
+    * 0 = ATT mode
+    * 1 = PWR mode
+
+CAL:
+  fnname: cal
+  description: >
+    Sets the display offset in ATT mode. The default unit is dB.
+
+PCAL:
+  fnname: pcal
+  description: >
+    Sets the display offset in PWR mode. The default unit is dBm.
+
+STPWR:
+  fnname: stpwr
+  description: >
+    Sets the display offset in PWR mode so that the display matches the
+    power meter reading. The default unit is dBm.
+
+ATT:
+  fnname: att
+  description: >
+    Sets the attenuation of the attenuator relative to the 0 dB
+    reference position; that is, it is independent of the attenuation
+    display offset. The default unit is dB.
+
+PWR:
+  fnname: pwr
+  description: >
+    Sets the output power of the attenuator including the display offset.
+    The default unit is dBm.
+
+    Use PCAL or STPWR or perform a calibration in local mode before
+    performing PWR.
+
+XDR:
+  fnname: xdr
+  description: >
+    Controls the on/off status of the driver.
+
+    * 0 = driver off
+    * 1 = driver on
+
+SRE:
+  fnname: sre
+  description: >
+    Writes a decimal number to the eight-bit SRQ mask register.
+    Setting a bit to 1 generates a service request interrupt (SRQ)
+    when the corresponding bit in the status register changes from
+    0 to 1 (see the *Status Reporting and Service Request Control*
+    section of the manual).
+
+CSB:
+  fnname: csb
+  description: >
+    Clears or resets the status byte.
+
+CLR:
+  fnname: clr
+  description: >
+    Clears the SRQ mask resister (see the Status Reporting and Service
+    Request Control section of the manual).
+
+# Query Commands
+
+D?:
+  fnname: d_query
+  description: >
+    Returns the on/off status of the beam block:
+
+    * 0 = Beam Block Off
+    * 1 = Beam Block On
+
+WVL?:
+  fnname: wvl_query
+  description: >
+    *Calibration Wavelength*
+
+    Returns the calibration wavelength:
+
+    * WVL? returns the current calibration wavelength.
+    * WVL? MIN returns the minimum calibration wavelength
+    * WVL? MAX returns the maximum calibration wavelength
+
+SLP?:
+  fnname: slp_query
+  description: >
+    Returns the user slope:
+
+    * SLP? returns the current user slope.
+    * SLP? MIN returns the minimum user slope.
+    * SLP? MAX returns the maximum user slope.
+
+USER?:
+  fnname: user_query
+  description: >
+    Returns the method by which the attenuator determines the
+    slope of the attenuation:
+
+    * 0 = calibration wavelength
+    * 1 = user slope
+
+DISP?:
+  fnname: disp_query
+  description: >
+    Returns the display mode of the attenuator.
+
+    * 0 = ATT mode
+    * 1 = PWR mode
+
+CAL?:
+  fnname: cal_query
+  description: >
+    Returns the display offset in ATT mode.
+
+    * CAL? returns the current display offset.
+    * CAL? MIN returns the minimum display offset.
+    * CAL? MAX returns the maximum display offset.
+
+PCAL?:
+  fnname: pcal_query
+  description: >
+    Returns the display offset in PWR mode. The default unit is dBm.
+
+    * PCAL? returns the current display offset.
+    * PCAL? MIN returns the minimum display offset.
+    * PCAL? MAX returns the maximum display offset.
+
+PWR?:
+  fnname: pwr_query
+  description: >
+    Returns the optical power setting:
+
+    * PWR? returns the current optical power setting.
+    * PWR? MIN returns the minimum optical power setting at the current wavelength
+    * PWR? MAX returns the maximum optical power setting at the current wavelength
+
+    If the HA9 attenuator is set at the minimum loss position, PWR? returns 101dB.
+
+ATT?:
+  fnname: att_query
+  description: >
+    Returns the attenuation of the attenuator.
+
+    * ATT? returns the current attenuation.
+    * ATT? MIN returns 0 or the minimum attenuation setting at the current wavelength..
+    * ATT? MAX returns 0 or the maximum attenuation setting at the current wavelength.
+
+    If the HA9 attenuator is set at the minimum loss position, ATT? returns -1dB
+
+XDR?:
+  fnname: xdr_query
+  description: >
+    Returns the status of the driver.
+
+    * 0 = driver off
+    * 1 = driver on
+
+SRE?:
+  fnname: sre_query
+  description: >
+    Returns the contents of the status register as an integer.
+
+CNB?:
+  fnname: cnb_query
+  description: >
+    Returns the contents of the condition regiser as an integer (see the
+    Status Reporting and Service Request Control section of the manual).
+
+TST?:
+  fnname: tst_query
+  description: >
+    Executes a self-test operation and returns the result. An error code
+    is also placed into the error queue. The queue can be queries with
+    *ERR?* or *LERR?*. *TST?* also sets bit 7 in the status register.
+
+    * 0 = self-test passed
+    * 1 = self-test failed
+
+ERR?:
+  fnname: err_query
+  description: >
+    Returns an error number if the self-test operation fails:
+
+    * 330 = self-test failed
+    * 0 = no error occurred
+
+LERR?:
+  fnname: lerr_query
+  description: >
+    Returns an error number from an error queue. The queue can contain
+    as many as five error numbers. The first error read is the last
+    error that occurred.
+
+    * 000 = error queue is empty.
+
+OPC?:
+  fnname: opc_query
+  description: >
+    Returns the status of the input buffer:
+
+    * 1 = the input buffer is empty; for example, all commands have been executed.
+    * 0 = the input buffer is not empty; for example, commands are still pending
+
+IDN?:
+  fnname: idn_query
+  description: >
+    Returns a string that identifies the manufacturer, the HA9 model number,
+    the serial number (or 0 if unavailable), and the firmware level,
+    for example JDS UNIPHASE HA9x, 01,0,00.100 (where x = S for standard
+    model and x = L for wide model).
+
+LRN?:
+  fnname: lrn_query
+  description: >-
+
+    In HA and HP mode, returns a 58-character string containing a summary of the current settings
+    of the attenuator. The string is formatted as follows:
+
+    * Fiber setting = four characters (always returns 1)
+    * Output state = four characters (0 = beam block off, 1 = beam block on)
+    * SRQ mask = eight characters
+    * Attenuation display offset = 13 characters
+    * Attenuation = 13 characters
+    * Wavelength = 16 characters
+
+    HA mode example: 1 0 6 10.0000 22.0000 13000e-06
+    HP mode example: F I;D 1;SRE 6;CAL 10.0000;ATT 22.0000;WVL 13000e-06;
