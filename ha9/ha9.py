@@ -25,11 +25,11 @@ class HA9():
         command_file = 'commands.yml'
 
         # this function creates register functions
-        def mkfn(*, fnname, description, **_):
+        def mkfn(*, command, fnname, description, **_):
             # _ here to absorb unused things. This way the yaml
             # can contain more info without causing errors here.
-            def reg_fun(self):
-                self.send_command()
+            def reg_fun(self, data=None):
+                self.send_command(command, data)
                 return self.get_response()
 
             reg_fun.__doc__ = description
@@ -41,11 +41,10 @@ class HA9():
             register_spec = yaml.safe_load(register_yaml)
 
             for register_name in register_spec:
-                print(register_name)
                 register_data = register_spec[register_name]
                 setattr(HA9,
                         '_' + register_data['fnname'],
-                        mkfn(**register_data))
+                        mkfn(command=register_name, **register_data))
 
     def __enter__(self):
         """TODO describe function
@@ -110,8 +109,17 @@ class HA9():
             # 3) It can be called by exiting a repl or a script ending (ie. __del__).
             pass
 
-    def send_command(self, register, data=None, signed=False):
-        pass
+    def send_command(self, command, data=None):
+
+        self._device.write(f'{command} {data}')
 
     def get_response(self, register):
         pass
+
+    def set_wavelength(self, wvl, units='nm'):
+        '''
+        Accepts the input in user chosen units. default is nm.
+        '''
+        units = units.capitalize()
+
+        self._wvl(f'{wvl}{units}')
