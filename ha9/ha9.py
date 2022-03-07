@@ -123,3 +123,12 @@ class HA9():
         units = units.capitalize()
 
         self._wvl(f'{wvl}{units}')
+
+    def set_attenuation(self, att):
+
+        self._att(f'{att}dB')
+
+
+    def reset(self):
+
+        self._reset()
