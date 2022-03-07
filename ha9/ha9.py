@@ -77,10 +77,6 @@ class HA9():
     def connect(self):
         """Establishes a serial connection with the port provided
 
-        **For some reason on Linux opening the serial port causes some
-        power output from the laser before it has been activated. This behavior
-        does not occur on Windows.**
-
         """
         try:
             self._device = serial.Serial(self._port, self._baudrate,
@@ -89,10 +85,9 @@ class HA9():
             raise SerialException("Connection to "
                                   + self._port + " unsuccessful.")
 
-    def disconnect(self, leave_on=False):
-        """Ends the serial connection to the laser
+    def disconnect(self):
+        """TODO Explain what this does.
 
-        :param leave_on:
         :returns:
 
         """
