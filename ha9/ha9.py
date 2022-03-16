@@ -176,3 +176,8 @@ class HA9():
 
         self._reset()
 
+    def get_summary(self):
+
+        response = self._lrn_query()
+
+        return response
