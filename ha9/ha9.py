@@ -108,8 +108,13 @@ class HA9():
 
         self._device.write(bytes(f'{command} {data}\r', 'UTF-8'))
 
-    def get_response(self, register):
-        pass
+    def get_response(self):
+        response = self._device.readline()
+
+        # change data type of response from bytestring to string
+        response = response.decode()
+
+        response = response.replace('\r', '\n')
 
     def set_wavelength(self, wvl, units='nm'):
         '''
