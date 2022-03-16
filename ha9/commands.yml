@@ -3,7 +3,7 @@
 # Operation Commands
 
 D:
-  fnname: beamblock
+  fnname: d
   description: >
     *Beam Block*
 
