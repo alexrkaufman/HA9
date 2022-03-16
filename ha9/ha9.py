@@ -123,6 +123,11 @@ class HA9():
         # convert to boolean and back to int. all values > 0 accepted as true
         self._d(int(bool(is_blocked)))
 
+    def is_blocked(self):
+        response = self._d_query()
+
+        return bool(response[0])
+
     def set_displaymode(self, displaymode):
 
         displaymodes = {'ATT': 0, 'PWR': 1}
