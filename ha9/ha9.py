@@ -119,7 +119,9 @@ class HA9():
         return response
 
     def set_block(self, is_blocked=True):
-        self._beamblock(is_blocked)
+
+        # convert to boolean and back to int. all values > 0 accepted as true
+        self._beamblock(int(bool(is_blocked)))
 
     def set_displaymode(self, displaymode='att'):
         displaymodes = ['att', 'pwr']
