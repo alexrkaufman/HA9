@@ -22,7 +22,7 @@ class HA9():
         self._baudrate = baudrate
         self._timeout = timeout
         self._device = None
-        command_file = 'commands.yml'
+        command_file = 'commands.yaml'
 
         # this function creates register functions
         def mkfn(*, command, fnname, description, **_):
