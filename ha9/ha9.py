@@ -123,14 +123,23 @@ class HA9():
         # convert to boolean and back to int. all values > 0 accepted as true
         self._beamblock(int(bool(is_blocked)))
 
-    def set_displaymode(self, displaymode='att'):
-        displaymodes = ['att', 'pwr']
+    def set_displaymode(self, displaymode):
 
-        if displaymode in  displaymodes:
-            self._disp(f'{displaymode}')
+        displaymodes = {'ATT': 0, 'PWR': 1}
 
-        raise Exception('Invalid display mode.\n'
-                        + '## TODO: pick an appropriate exception for this ##')
+        if type(displaymode) == int:
+            setting = displaymode
+
+        else:
+            displaymode = displaymode.upper()
+
+            if displaymode in displaymodes.keys():
+                setting = displaymodes[displaymode]
+
+            if displaymode in displaymode.values():
+                setting = displaymode
+
+        response = self._disp(f'{setting}')
 
     def get_wavelength(self, units='nm'):
 
@@ -145,7 +154,7 @@ class HA9():
         Accepts the input in user chosen units. default is nm.
         Can accept upper or lowercase.
         '''
-        units = units.capitalize()
+        units = units.upper()
 
         self._wvl(f'{wvl}{units}')
 
