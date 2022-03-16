@@ -9,7 +9,7 @@ class HA9():
     A class that represents the HA9 programmable variable attenuator.
     '''
 
-    def __init__(self, serial_port, baudrate, timeout=0.5):
+    def __init__(self, serial_port, baudrate=1200, timeout=0.5):
         """TODO describe function
 
         :param serial_port:
