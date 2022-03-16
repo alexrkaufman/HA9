@@ -116,6 +116,8 @@ class HA9():
 
         response = response.replace('\r', '\n')
 
+        return response
+
     def set_block(self, is_blocked=True):
         self._beamblock(is_blocked)
 
