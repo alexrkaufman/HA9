@@ -114,7 +114,7 @@ class HA9():
         # change data type of response from bytestring to string
         response = response.decode()
 
-        response = response.replace('\r', '\n')
+        response = response.replace('\r', '')
 
         return response
 
