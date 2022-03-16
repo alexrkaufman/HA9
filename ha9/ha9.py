@@ -106,7 +106,7 @@ class HA9():
 
     def send_command(self, command, data=None):
 
-        self._device.write(f'{command} {data}')
+        self._device.write(bytes(f'{command} {data}\r', 'UTF-8'))
 
     def get_response(self, register):
         pass
