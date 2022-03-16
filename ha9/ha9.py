@@ -116,19 +116,45 @@ class HA9():
 
         response = response.replace('\r', '\n')
 
+    def set_block(self, is_blocked=True):
+        self._beamblock(is_blocked)
+
+    def set_displaymode(self, displaymode='att'):
+        displaymodes = ['att', 'pwr']
+
+        if displaymode in  displaymodes:
+            self._disp(f'{displaymode}')
+
+        raise Exception('Invalid display mode.\n'
+                        + '## TODO: pick an appropriate exception for this ##')
+
+    def get_wavelength(self, units='nm'):
+
+        response = self._wvl_query()
+
+        wavelength = float(response) * 1e9
+
+        return wavelength
+
     def set_wavelength(self, wvl, units='nm'):
         '''
         Accepts the input in user chosen units. default is nm.
+        Can accept upper or lowercase.
         '''
         units = units.capitalize()
 
         self._wvl(f'{wvl}{units}')
 
+    def get_attenuation(self):
+
+        response = self._att_query()
+        return float(response)
+
     def set_attenuation(self, att):
 
         self._att(f'{att}dB')
 
-
     def reset(self):
 
         self._reset()
+
