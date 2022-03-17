@@ -118,15 +118,16 @@ class HA9():
 
         return response
 
-    def set_block(self, is_blocked=True):
+    def beamblock(self, block=None):
 
-        # convert to boolean and back to int. all values > 0 accepted as true
-        self._d(int(bool(is_blocked)))
+        if block is not None: 
+            self._d(int(bool(block)))
 
-    def is_blocked(self):
         response = self._d_query()
 
-        return bool(response[0])
+        is_blocked = bool(int(response[0]))
+
+        return is_blocked
 
     def set_displaymode(self, displaymode):
 
